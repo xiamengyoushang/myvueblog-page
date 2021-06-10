@@ -1,22 +1,49 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Login from '../views/Login.vue';
+import Blogs from "../views/Blogs";
+import BlogDetail from "../views/BlogDetail";
+import BlogEdit from "../views/BlogEdit";
 
 Vue.use(VueRouter)
 
+// 页面路由
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Index',
+    redirect: {name:"Blogs"}  // 默认路由页面
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/blogs',
+    name: 'Blogs',
+    component: Blogs
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/blog/add',
+    name: 'BlogAdd',    // name需要唯一，component可以一样
+    component: BlogEdit,
+    meta:{
+      requireAuth:true  // 路由拦截
+    }
+  },
+  {
+    path: '/blog/:blogId',
+    name: 'BlogDetail',
+    component: BlogDetail
+  },
+  {
+    path: '/blog/:blogId/edit',
+    name: 'BlogEdit',
+    component: BlogEdit,
+    meta:{
+      requireAuth:true  // 路由拦截
+    }
   }
 ]
 
